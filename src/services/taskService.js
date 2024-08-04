@@ -12,6 +12,23 @@ async function getAllTasks(userId) {
     }
 }
 
+async function deleteTask(userId, taskId) {
+    const query = 'DELETE FROM user_tasks WHERE user_id = ? AND task_id = ?';
+    const values = [userId, taskId];
+    try {
+        const result = await database.runQuery(query, values);
+        
+        if (result.affectedRows === 0) {
+            throw new Error('No se encontró la tarea o no pertenece al usuario');
+        }
+
+        return { success: true, message: `Tarea eliminada con éxito: ID ${taskId}`, ephemeral: true };
+    } catch (error) {
+        console.error('Error al eliminar la tarea:', error);
+        return { success: false, message: 'Hubo un error al eliminar la tarea.', ephemeral: true };
+    }
+}
+
 async function addTask(userId, taskDescription) {
     const query = 'INSERT INTO user_tasks (user_id, task, task_done) VALUES (?, ?, ?)';
     const values = [userId, taskDescription, false];
@@ -39,6 +56,7 @@ async function completeTask(userId, taskId) {
 
 module.exports = { 
     getAllTasks,
+    deleteTask,
     completeTask,
     addTask 
 };

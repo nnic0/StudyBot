@@ -1,5 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require('../db/database');
+const colors = require('../utils/colors');
 
 const activeTimers = new Map();
 
@@ -112,7 +113,7 @@ class Timer {
         const embed = new EmbedBuilder()
             .setTitle(`Sesión de ${sessionType}`)
             .setDescription(`${time} minutos de ${sessionType.toLowerCase()}.`)
-            .setColor(sessionType === 'trabajo' ? 0xFF0000 : 0x00FF00)
+            .setColor(sessionType === 'trabajo' ? colors.RED : colors.GREEN)
             .setTimestamp();
 
         await this.notifyGroup({ embeds: [embed] });

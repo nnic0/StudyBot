@@ -1,12 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Timer } = require('../../utils/timer'); // Asegúrate de que la ruta sea correcta
+const { Timer } = require('../../services/timerService'); // Asegúrate de que la ruta sea correcta
 const database = require('../../db/database'); // Asegúrate de que la ruta sea correcta
-const { config } = require('../../utils/config');
-const { createUser } = require('../../utils/user');
+const { config } = require('../../services/configService');
+const { createUser } = require('../../services/userService');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('study')
+        .setName('pomodoro')
         .setDescription('Empezá a estudiar con pomodoro')
         .addIntegerOption(option =>
             option.setName('tiempo')
@@ -47,18 +47,18 @@ module.exports = {
                     }
                     break;
                 default:
-                    await interaction.reply('Opción de tiempo no válida.');
+                    await interaction.reply({content: 'Opción de tiempo no válida.', ephemeral: true});
                     return;
             }
 
             // Inicia el temporizador
-            const timer = new Timer(interaction, workTime, relaxTime); // Pasa la interacción para manejar respuestas y los tiempos de trabajo y descanso
+            const timer = new Timer(interaction, workTime, relaxTime);
             await timer.start();
 
         } catch (error) {
             console.error('Error en execute:', error);
             if (!interaction.replied) {
-                await interaction.reply('Hubo un error al procesar tu solicitud.');
+                await interaction.reply({content: 'Hubo un error al procesar tu solicitud.', ephemeral: true});
             }
         }
     },

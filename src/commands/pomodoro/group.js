@@ -2,7 +2,7 @@ const { Interaction, Client, Collection, SlashCommandBuilder } = require('discor
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('group')
+        .setName('create-group')
         .setDescription('Crea un grupo de estudio')
         .addStringOption(option => option.setName('miembros').setDescription('Lista de miembros del grupo').setRequired(true)),
     async execute(interaction) {

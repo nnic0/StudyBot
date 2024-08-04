@@ -1,9 +1,9 @@
 const { Interaction, Client, Collection, SlashCommandBuilder } = require('discord.js');
-const { activeTimers } = require('../../utils/timer'); // Ensure you export activeTimers from your timer file
+const { activeTimers } = require('../../services/timerService.js'); // Ensure you export activeTimers from your timer file
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('stop')
+        .setName('stop-pomo')
         .setDescription('Frena tu sesión antes de tiempo'),
     async execute(interaction) {
         const userId = interaction.user.id;

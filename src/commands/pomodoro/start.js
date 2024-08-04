@@ -1,11 +1,11 @@
 const { Interaction, Client, Collection, SlashCommandBuilder } = require('discord.js');
-const { Timer } = require('../../utils/timer');
-const { config } = require('../../utils/config');
-const { createUser } = require('../../utils/user');
+const { Timer } = require('../../services/timerService');
+const { config } = require('../../services/configService');
+const { createUser } = require('../../services/userService');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('start')
+        .setName('start-group-pomo')
         .setDescription('Inicia una sesión Pomodoro en grupo')
         .addIntegerOption(option =>
             option.setName('tiempo')
