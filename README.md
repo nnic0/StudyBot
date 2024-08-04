@@ -1,10 +1,12 @@
-![StudyBot, icon](/src/config/StudyBot3.png)
-
-# StudyBot
+<p align="center">
+  <img src="https://i.imgur.com/UhncxoT.png" alt="StudyBot" width="150"/>
+  <h1 align = "center">StudyBot</h1>
+</p>
 
 ### Description
 StudyBot is a versatile Discord bot designed to enhance productivity and learning through structured study sessions. Leveraging techniques like the Pomodoro method and active recall, along with a to-do list for task management, StudyBot supports both group and individual study environments. Users can create and manage study groups, receive session notifications, and utilize flashcards for memorization, with all progress and configurations stored persistently in a MySQL database.
 
+---
 ### Features
 
 - **Pomodoro Session Management:**
@@ -59,7 +61,9 @@ StudyBot is a versatile Discord bot designed to enhance productivity and learnin
   - `/todo remove [task_id]`: Remove a task from the list.
   - `/todo done [task_id]`: Mark a task as completed.
   - `/todo list`: Display all tasks and their statuses.
-
+---
 ### License
 
 StudyBot is licensed under the MIT License. See the LICENSE file for more information.
+
+---
