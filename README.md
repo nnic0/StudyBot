@@ -1,4 +1,4 @@
-![StudyBot, icon](/src/config/StudyBot.png)
+![StudyBot, icon](/src/config/StudyBot3.png)
 
 # StudyBot
 
