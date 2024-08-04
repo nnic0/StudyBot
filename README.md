@@ -1,3 +1,5 @@
+![StudyBot, icon](/src/config/StudyBot.png)
+
 # StudyBot
 
 ### Description
