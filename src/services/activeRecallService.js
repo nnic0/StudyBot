@@ -7,25 +7,34 @@ const colors = require('../utils/colors');
 const moment = require('moment');
 
 class ActiveRecall {
-    constructor(interaction, topicId) {
+    constructor(interaction, topicName) {
         this.interaction = interaction;
         this.cards = [];
-        this.topicId = topicId;
+        this.topicName = topicName;
         this.currentCardIndex = 0;
         this.isStudying = false;
+        this.cardsStudied = 0;
+        this.startTime = null;
     }
 
     async start() {
         this.isStudying = true;
-        this.cards = await loadCards(this.topicId);
+        this.startTime = Date.now();
+        const topic_id = await this.getId(this.topicName, this.interaction.user.id)
+        this.cards = await loadCards(topic_id);
         this.currentCardIndex = 0;
+        this.cardsStudied = 0;
         await this.sendCard();
     }
 
     async sendCard() {
-        if (!this.isStudying || this.currentCardIndex >= this.cards.length) {
+        if (!this.isStudying) {
             await this.stop();
             return;
+        }
+
+        if (this.currentCardIndex >= this.cards.length) {
+            this.currentCardIndex = 0;
         }
     
         const card = this.cards[this.currentCardIndex];
@@ -47,7 +56,7 @@ class ActiveRecall {
     
         const filter = i => ['again', 'hard', 'good', 'easy', 'stop'].includes(i.customId) && i.user.id === this.interaction.user.id;
         try {
-            const response = await this.interaction.channel.awaitMessageComponent({ filter, time: 60000 });
+            const response = await this.interaction.channel.awaitMessageComponent({ filter, time: 120000 });
     
             if (response.customId === 'stop') {
                 await this.stop();
@@ -84,11 +93,15 @@ class ActiveRecall {
     
             await response.update({ embeds: [embed.setDescription(`${card.question}\n\n**Respuesta:** ${card.answer}`)], components: [] });
             this.currentCardIndex++;
-            
+            this.cardsStudied++;
+
             setTimeout(() => this.sendCard(), 5000);
         } catch (error) {
             if (error.name === 'TimeoutError') {
                 await this.interaction.followUp('Se acabó el tiempo para responder. Sesión de estudio finalizada.');
+                await this.stop();
+            } else if (error.code == 'InteractionCollectorError'){ 
+                await this.interaction.followUp('No se recibió respuesta. Sesión de estudio finalizada.');
                 await this.stop();
             } else {
                 console.error('Error en sendCard:', error);
@@ -98,10 +111,45 @@ class ActiveRecall {
         }
     }
     
+    async getId(topicName, userId) {
+        const query = 'SELECT topic_id FROM topics WHERE topic_name = ? AND user_id = ?'
+        const params = [topicName, userId]
+        const [topic] = await db.runQuery(query, params);
+        const topic_id = topic ? topic.topic_id : null;
+        return topic_id
+    }
     
     async stop() {
         this.isStudying = false;
-        await this.interaction.followUp('¡Sesión de estudio finalizada!');
+        const duration = (Date.now() - this.startTime) / 1000; // Duración en segundos
+        const minutes = Math.floor(duration / 60);
+        const seconds = Math.floor(duration % 60);
+
+        this.updateUserStats(minutes);
+
+        const statsEmbed = new EmbedBuilder()
+            .setColor(colors.GREEN)
+            .setTitle('Estadísticas de la sesión de estudio')
+            .addFields(
+                { name: 'Tarjetas estudiadas', value: `${this.cardsStudied}`, inline: true },
+                { name: 'Duración', value: `${minutes} minutos, ${seconds} segundos`, inline: true },
+                { name: 'Tema', value: this.topicName }
+            );
+
+        await this.interaction.followUp({ content: '¡Sesión de estudio finalizada!', embeds: [statsEmbed] });
+    }
+
+    async updateUserStats(minutes) {
+        const userId = this.interaction.user.id;
+        const query = 'UPDATE user_stats SET minutes_act = minutes_act + ?, cards_studied = cards_studied + ? WHERE user_id = ?'
+        const params = [minutes, this.cardsStudied, userId]
+        console.log(query, params)
+        try {
+            await db.runQuery(query, params);
+        } catch (error) {
+            console.error('Error al actualizar user_stats:', error);
+            await this.interaction.followUp('Ocurrió un error al guardar las estadísticas.');
+        }
     }
 }
 

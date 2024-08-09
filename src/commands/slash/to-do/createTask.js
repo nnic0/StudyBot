@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const task = require('../../services/taskService.js');
-const { createUser } = require('../../services/userService.js');
+const task = require('../../../services/taskService.js');
+const { createUser } = require('../../../services/userService.js');
 
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('add-task')
+        .setName('todo-add')
         .setDescription('Agrega una nueva tarea a tu lista de tareas')
         .addStringOption(option => 
             option.setName('tarea')

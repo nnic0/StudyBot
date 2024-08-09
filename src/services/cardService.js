@@ -14,7 +14,7 @@ async function createCard(topicId, question, answer, userId) {
 }
 
 async function deleteCard(userId, cardId) {
-    const query = 'DELETE FROM cards WHERE card_id = ? AND user_id = ?';
+    const query = 'DELETE FROM cards WHERE question = ? AND user_id = ?';
     const values = [cardId, userId];
 
     try {

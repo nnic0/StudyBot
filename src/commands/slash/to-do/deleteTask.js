@@ -1,21 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { deleteTask } = require('../../services/taskService.js');
+const { deleteTask } = require('../../../services/taskService.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('delete-task')
+        .setName('todo-remove')
         .setDescription('Elimina una tarea')
-        .addIntegerOption(option => 
-            option.setName('task-id')
-                .setDescription('ID de la tarea a eliminar')
+        .addStringOption(option => 
+            option.setName('task-name')
+                .setDescription('Nombre de la tarea')
                 .setRequired(true)),
 
     async execute(interaction) {
         const userId = interaction.user.id;
-        const taskId = interaction.options.getInteger('task-id');
+        const taskName = interaction.options.getString('task-name');
 
         try {
-            const result = await deleteTask(userId, taskId);
+            const result = await deleteTask(userId, taskName);
             await interaction.reply({ content: result.message, ephemeral: true });
         } catch (error) {
             console.error('Error en el comando delete-task:', error);

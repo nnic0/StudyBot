@@ -1,18 +1,20 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { deleteDeck } = require("../../services/deckService");
+const { createUser } = require('../../../services/userService');
+const { createDeck } = require("../../../services/deckService");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('delete-deck')
-        .setDescription('Elimina un mazo.')
+        .setName('deck-create')
+        .setDescription('Crea un mazo para crear tarjetas en el mismo.')
         .addStringOption(option => 
-            option.setName('mazo-id')
-                .setDescription('ID del mazo')
+            option.setName('tema')
+                .setDescription('Nombre del mazo')
                 .setRequired(true)),
     async execute(interaction) {
-        const id = interaction.options.getString('mazo-id');
+        const tema = interaction.options.getString('tema');
         const userId = interaction.user.id;
-        const result = await deleteDeck(userId, id);
+        await createUser(userId);
+        const result = await createDeck(userId, tema);
         
         if (result.success) {
             await interaction.reply({ content: result.message, ephemeral: result.ephemeral });

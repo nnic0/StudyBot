@@ -13,8 +13,10 @@ CREATE TABLE IF NOT EXISTS user_config (
 
 CREATE TABLE IF NOT EXISTS user_stats (
     user_id VARCHAR(50) NOT NULL,
-    minutes INT DEFAULT 0,
+    minutes_pom INT DEFAULT 0,
     pomodoro_tot INT DEFAULT 0,
+    minutes_act INT DEFAULT 0,
+    cards_studied INT DEFAULT 0,
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

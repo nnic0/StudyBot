@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
   database: process.env.MYSQL_DATABASE
 });
 
-const sqlDb = fs.readFileSync('initialize_db.sql', 'utf8');
+const sqlDb = fs.readFileSync('squema.sql', 'utf8');
 
 connection.connect((err) => {
   if (err) {

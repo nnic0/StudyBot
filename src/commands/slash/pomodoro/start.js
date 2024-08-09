@@ -1,7 +1,7 @@
 const { Interaction, Client, Collection, SlashCommandBuilder } = require('discord.js');
-const { Timer } = require('../../services/timerService');
-const { config } = require('../../services/configService');
-const { createUser } = require('../../services/userService');
+const { Timer } = require('../../../services/timerService');
+const { config } = require('../../../services/configService');
+const { createUser } = require('../../../services/userService');
 
 module.exports = {
     data: new SlashCommandBuilder()

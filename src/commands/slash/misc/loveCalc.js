@@ -4,34 +4,33 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('lovecalc')
     .setDescription('Calcula el nivel de amor entre dos usuarios')
-    .addStringOption(option =>
+    .addUserOption(option =>
       option.setName('persona1')
-        .setDescription('@persona1')
+        .setDescription('Selecciona a la primera persona')
         .setRequired(true)
     )
-    .addStringOption(option =>
+    .addUserOption(option =>
       option.setName('persona2')
-        .setDescription('@persona2')
+        .setDescription('Selecciona a la segunda persona')
         .setRequired(true)
     ),
   async execute(interaction) {
-    const persona1 = interaction.options.getString('persona1');
-    const persona2 = interaction.options.getString('persona2');
+    const firstUserId = interaction.options.getUser('persona1');
+    const secondUserId = interaction.options.getUser('persona2');
+    console.log(firstUserId);
 
-    const idEspecial1 = '898041532815396875';
-    const idEspecial2 = '493851314430803968';
+    const specialIds = ['493851314430803968', '898041532815396875']
+    const loveMax = specialIds.includes(firstUserId.id) && specialIds.includes(secondUserId.id);
 
-    const amorMaximo = (persona1 === idEspecial1 && persona2 === idEspecial2) ||
-                       (persona1 === idEspecial2 && persona2 === idEspecial1);
+    const nivelAmor = loveMax ? 100 : Math.floor(Math.random() * 101);
 
-    const nivelAmor = amorMaximo ? 100 : Math.floor(Math.random() * 101);
     let msg = '';
     if(nivelAmor == 100){
         msg = '¡Son almas gemelas!'
     } else if(nivelAmor > 90){
         msg = '¡Podrían hacer una buena pareja!'
     } else if(nivelAmor > 80){
-        msg = '¡Seguramente durarían muchos años'
+        msg = '¡Seguramente durarían muchos años!'
     } else if(nivelAmor > 50){
         msg = '¡Muy buenos amigos!'
     } else if(nivelAmor > 10){
@@ -40,6 +39,6 @@ module.exports = {
         msg = '¡No hay peor pareja!'
     }
 
-    interaction.reply(`El nivel de amor entre ${persona1} y ${persona2} es del ${nivelAmor}% 💖 ` + msg);
+    interaction.reply(`El nivel de amor entre ${firstUserId.globalName} y ${secondUserId.globalName} es del ${nivelAmor}% 💖 ` + msg);
   },
 };

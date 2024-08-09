@@ -1,24 +1,24 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { renameDeck } = require('../../services/deckService');
+const { renameDeck } = require('../../../services/deckService');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('rename-deck')
+        .setName('deck-rename')
         .setDescription('Renombra un mazo.')
         .addStringOption(option => 
-            option.setName('mazo-id')
-                .setDescription('ID del mazo')
+            option.setName('nombre')
+                .setDescription('Nombre del mazo')
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('nombre')
-                .setDescription('Nuevo nombre')
+            option.setName('nuevo-nombre')
+                .setDescription('Nuevo nombre del mazo')
                 .setRequired(true)),
     async execute(interaction) {
-        const topicId = interaction.options.getString('mazo-id');
-        const newName = interaction.options.getString('nombre');
+        const deckName = interaction.options.getString('nombre');
+        const newName = interaction.options.getString('nuevo nombre');
         const userId = interaction.user.id;
         
-        const result = await renameDeck(userId, topicId, newName);
+        const result = await renameDeck(userId, deckName, newName);
         
         if (result.success) {
             await interaction.reply({ content: result.message, ephemeral: result.ephemeral });

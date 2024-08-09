@@ -11,9 +11,7 @@ StudyBot is a versatile Discord bot designed to enhance productivity and learnin
 
 - **Pomodoro Session Management:**
   - **Start Session:** Begin a Pomodoro session with a predefined or custom duration.
-  - **Pause Session:** Temporarily halt a running session.
   - **Stop Session:** End the current session prematurely.
-  - **Resume Session:** Continue a paused session.
   - **Group Sessions:** Start and manage Pomodoro sessions for study groups.
   - **Individual Sessions:** Manage personal Pomodoro sessions.
 
@@ -34,12 +32,6 @@ StudyBot is a versatile Discord bot designed to enhance productivity and learnin
   - **Remove Task:** Delete tasks from the list.
   - **Mark Task as Completed:** Mark tasks as done.
   - **List Tasks:** Display all tasks with their statuses.
-  - **Task Notifications:** Notify users about pending tasks or deadlines.
-
-- **Notifications:**
-  - **Session Start/End:** Inform users when a study session starts or ends.
-  - **Break Alerts:** Notify users when it’s time to take a break.
-  - **Custom Reminders:** Set and receive reminders for specific tasks or study sessions.
 
 - **Data Persistence:**
   - **MySQL Integration:** Store and retrieve user configurations, session progress, and other data.

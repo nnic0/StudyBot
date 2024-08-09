@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { getAllTasks } = require('../../services/taskService.js');
-const { createUser } = require('../../services/userService.js');
-const colors = require('../../utils/colors.js');
+const { getAllTasks } = require('../../../services/taskService.js');
+const { createUser } = require('../../../services/userService.js');
+const colors = require('../../../utils/colors.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('tasks')
+        .setName('todo-list')
         .setDescription('Muestra tus tareas')
         .addStringOption(option =>
             option.setName('filtrar')
@@ -36,20 +36,26 @@ module.exports = {
             }
 
             const embed = new EmbedBuilder()
-                .setTitle('To-do List')
+                .setTitle('📌 To-do List')
                 .setDescription(getDescription(filter))
-                .setColor(colors.BLUE)
+                .setColor(colors.BLUE);
 
             tasks.forEach(task => {
-                embed.addFields({
-                    name: ` `,
-                    value: `**${task.task}** ${task.task_done ? '✅' : '❌'}\nCreada: ${task.created_at.toLocaleString()} **ID: ${task.task_id}**`
-                });
+                const createdDate = new Date(task.created_at);
+                const createdDateString = `${createdDate.toLocaleDateString('es-ES')} ${createdDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+                let taskDescription = `**${task.task}** ${task.task_done ? '✅' : '❌'}\nCreada: ${createdDateString}`;
+                
+                if (task.task_done && task.completed_at) {
+                    const completedDate = new Date(task.completed_at);
+                    const completedDateString = `${completedDate.toLocaleDateString('es-ES')} ${completedDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+                    taskDescription += `\nCompletada: ${completedDateString}`;
+                }
+
+                embed.addFields({ name: ' ', value: taskDescription });
             });
 
             await interaction.reply({ 
-                embeds: [embed], 
-                ephemeral: true 
+                embeds: [embed]
             });
         } catch (error) {
             console.error('Error al obtener las tareas:', error);

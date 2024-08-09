@@ -1,21 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { completeTask } = require('../../services/taskService.js');
+const { completeTask } = require('../../../services/taskService.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('done-task')
+        .setName('todo-done')
         .setDescription('Marca una tarea como completada')
-        .addIntegerOption(option => 
-            option.setName('task-id')
-                .setDescription('ID de la tarea a completar')
+        .addStringOption(option => 
+            option.setName('task-name')
+                .setDescription('Nombre de la tarea a completar')
                 .setRequired(true)),
 
     async execute(interaction) {
         const userId = interaction.user.id;
-        const taskId = interaction.options.getInteger('task-id');
+        const taskName = interaction.options.getString('task-name');
 
         try {
-            const result = await completeTask(userId, taskId);
+            const result = await completeTask(userId, taskName);
             await interaction.reply({content: result.message, ephemeral: true});
         } catch (error) {
             console.error('Error en el comando complete-task:', error);

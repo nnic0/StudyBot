@@ -13,9 +13,9 @@ async function createDeck(userId, topic) {
     }
 }
 
-async function deleteDeck(userId, topicId) {
-    const query = 'DELETE FROM topics WHERE topic_id = ? AND user_id = ?';
-    const values = [topicId, userId];
+async function deleteDeck(userId, topicName) {
+    const query = 'DELETE FROM topics WHERE topic_name = ? AND user_id = ?';
+    const values = [topicName, userId];
 
     try {
         const result = await db.runQuery(query, values);
@@ -24,16 +24,16 @@ async function deleteDeck(userId, topicId) {
             throw new Error('No se encontró el mazo o no pertenece al usuario');
         }
 
-        return { success: true, message: `Mazo eliminado con éxito: ID ${topicId}`, ephemeral: true };
+        return { success: true, message: `Mazo ${topicName} eliminado con éxito`, ephemeral: true };
     } catch (error) {
         console.error('Error al eliminar el mazo:', error);
         return { success: false, message: 'Hubo un error al eliminar el mazo.', ephemeral: true };
     }
 }
 
-async function renameDeck(userId, topicId, topicName) {
-    const query = 'UPDATE topics SET topic_name = ? WHERE topic_id = ? AND user_id = ?';
-    const values = [topicName, topicId, userId];
+async function renameDeck(userId, topicName, newTopicName) {
+    const query = 'UPDATE topics SET topic_name = ? WHERE topic_name = ? AND user_id = ?';
+    const values = [newTopicName, topicName, userId];
 
     try {
         const result = await db.runQuery(query, values);
@@ -42,7 +42,7 @@ async function renameDeck(userId, topicId, topicName) {
             throw new Error('No se encontró el mazo o no pertenece al usuario');
         }
 
-        return { success: true, message: `Mazo renombrado con éxito: ${topicName}`, ephemeral: true };
+        return { success: true, message: `Mazo renombrado con éxito: ${newTopicName}`, ephemeral: true };
     } catch (error) {
         console.error('Error al renombrar el mazo:', error);
         return { success: false, message: 'Hubo un error al renombrar el mazo.', ephemeral: true };

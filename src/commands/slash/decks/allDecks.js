@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getDecks } = require('../../services/deckService');
-const { createEmbed } = require('../../utils/embedHelper');
-const colors = require('../../utils/colors');
+const { getDecks } = require('../../../services/deckService');
+const { createEmbed } = require('../../../utils/embedHelper');
+const colors = require('../../../utils/colors');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('show-decks')
+        .setName('deck-list')
         .setDescription('Muestra todos los mazos que tienes.'),
     async execute(interaction) {
         const userId = interaction.user.id;
@@ -20,7 +20,7 @@ module.exports = {
 
             let description = '';
             decks.forEach(deck => {
-                description += `**ID:** ${deck.topic_id} » ${deck.topic_name} 📝 ${deck.card_count}\n`;
+                description += `» ${deck.topic_name} 📝 ${deck.card_count}\n`;
             });
 
             const embed = createEmbed('📚 Mazos de estudio', description, colors.ORANGE);

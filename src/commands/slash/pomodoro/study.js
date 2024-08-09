@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Timer } = require('../../services/timerService'); // Asegúrate de que la ruta sea correcta
-const database = require('../../db/database'); // Asegúrate de que la ruta sea correcta
-const { config } = require('../../services/configService');
-const { createUser } = require('../../services/userService');
+const { Timer } = require('../../../services/timerService'); // Asegúrate de que la ruta sea correcta
+const database = require('../../../db/database'); // Asegúrate de que la ruta sea correcta
+const { config } = require('../../../services/configService');
+const { createUser } = require('../../../services/userService');
 
 module.exports = {
     data: new SlashCommandBuilder()
