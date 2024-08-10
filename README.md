@@ -99,6 +99,8 @@ To view all the active reminders you have set:
 - **/todo-done [task_name]:** Mark a task as completed.
 - **/todo-list:** Display all tasks and their statuses.
 
+---
+
 ## Prerequisites
 
 Before setting up StudyBot, make sure you have the following installed:
@@ -147,6 +149,8 @@ To set up the MySQL database and tables required for StudyBot, follow these step
     ```bash
       mysql -u your_username -p studybot < data/squema.sql
     ```
+
+---
 
 ## Final Steps
 After completing the above steps, your StudyBot should be ready to use! Start the bot using the following command:
