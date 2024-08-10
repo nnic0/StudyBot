@@ -52,6 +52,17 @@ CREATE TABLE cards (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS reminders (
+    reminder_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL,
+    message VARCHAR(255) NOT NULL,
+    reminder_time DATETIME NOT NULL,
+    recurring ENUM('daily', 'weekly', 'none') DEFAULT 'none',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 DELIMITER //
 
 CREATE PROCEDURE `create_new_user`(

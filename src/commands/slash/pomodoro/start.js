@@ -30,12 +30,12 @@ module.exports = {
 
             switch (tiempo) {
                 case 0:
-                    workTime = 25; // minutos
-                    relaxTime = 5; // minutos
+                    workTime = 25;
+                    relaxTime = 5;
                     break;
                 case 1:
-                    workTime = 30; // minutos
-                    relaxTime = 10; // minutos
+                    workTime = 30;
+                    relaxTime = 10;
                     break;
                 case 2:
                     const customTimes = await config(interaction.user.id);

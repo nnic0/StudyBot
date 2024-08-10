@@ -2,7 +2,7 @@ const { Interaction, Client, Collection, SlashCommandBuilder } = require('discor
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('disband-group')
+        .setName('group-disband')
         .setDescription('Disuelve tu grupo de estudio'),
     async execute(interaction) {
         if (!interaction.client.groups) {

@@ -1,5 +1,6 @@
 const { Events, ActivityType } = require('discord.js');
 const { configBotProfile } = require('../config/botConfig');
+const { checkReminder } = require('../schedule/checkReminders');
 
 module.exports = {
     name: Events.ClientReady,
@@ -14,6 +15,11 @@ module.exports = {
             activityType: ActivityType.Watching,
             status: 'online'
         });
+        
+        setInterval(() => {
+            checkReminder(client)
+        }, 60000);
+
 
     },
 };

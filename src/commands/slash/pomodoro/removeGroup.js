@@ -2,12 +2,12 @@ const { Interaction, Client, Collection, SlashCommandBuilder } = require('discor
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('remove-member')
+        .setName('group-remove')
         .setDescription('Elimina un miembro del grupo de estudio')
         .addStringOption(option => option.setName('miembro').setDescription('Nombre o mención del miembro').setRequired(true)),
     async execute(interaction) {
         const memberString = interaction.options.getString('miembro');
-        const memberId = memberString.replace(/[<@!>]/g, ''); // Filtra el ID
+        const memberId = memberString.replace(/[<@!>]/g, '');
 
         if (!interaction.client.groups) {
             interaction.client.groups = new Collection();

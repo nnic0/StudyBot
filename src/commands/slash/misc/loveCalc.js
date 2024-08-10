@@ -17,7 +17,6 @@ module.exports = {
   async execute(interaction) {
     const firstUserId = interaction.options.getUser('persona1');
     const secondUserId = interaction.options.getUser('persona2');
-    console.log(firstUserId);
 
     const specialIds = ['493851314430803968', '898041532815396875']
     const loveMax = specialIds.includes(firstUserId.id) && specialIds.includes(secondUserId.id);

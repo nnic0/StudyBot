@@ -7,7 +7,7 @@ module.exports = {
         .addStringOption(option => option.setName('miembros').setDescription('Lista de miembros del grupo').setRequired(true)),
     async execute(interaction) {
         const membersString = interaction.options.getString('miembros');
-        const membersArray = membersString.split(' ').map(name => name.replace(/[<@!>]/g, '')); // Filtra los IDs
+        const membersArray = membersString.split(' ').map(name => name.replace(/[<@!>]/g, ''));
 
         if (!interaction.client.groups) {
             interaction.client.groups = new Collection();

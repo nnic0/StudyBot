@@ -21,13 +21,10 @@ connection.connect(function (err) {
 
 function executeQuery(query, values, callback = () => {}) {
     connection.query(query, values, function (err, result) {
-        console.log("Consulta y valores de la consulta: ", query, values);
         if (err) {
-            console.error("Error al ejecutar la consulta:", err);
             throw err;
         }
         callback(result);
-        console.log("Resultados de la función executeQuery: ", result);
     });
 }
 

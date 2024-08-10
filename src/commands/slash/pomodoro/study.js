@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Timer } = require('../../../services/timerService'); // Asegúrate de que la ruta sea correcta
-const database = require('../../../db/database'); // Asegúrate de que la ruta sea correcta
+const { Timer } = require('../../../services/timerService');
 const { config } = require('../../../services/configService');
 const { createUser } = require('../../../services/userService');
 
@@ -24,17 +23,16 @@ module.exports = {
             const userId = interaction.user.id;
             await createUser(userId);
 
-            // Aquí puedes implementar la lógica para iniciar el temporizador
             let workTime, relaxTime;
 
             switch (tiempo) {
                 case 0:
-                    workTime = 25; // minutos
-                    relaxTime = 5; // minutos
+                    workTime = 25;
+                    relaxTime = 5;
                     break;
                 case 1:
-                    workTime = 30; // minutos
-                    relaxTime = 10; // minutos
+                    workTime = 30;
+                    relaxTime = 10;
                     break;
                 case 2:
                     const customTimes = await config(interaction.user.id);
@@ -51,7 +49,6 @@ module.exports = {
                     return;
             }
 
-            // Inicia el temporizador
             const timer = new Timer(interaction, workTime, relaxTime);
             await timer.start();
 
