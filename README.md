@@ -150,9 +150,9 @@ To set up the MySQL database and tables required for StudyBot, follow these step
 
 ## Final Steps
 After completing the above steps, your StudyBot should be ready to use! Start the bot using the following command:
-    ```bash
-      node index.js
-    ```
+  ```bash
+    node index.js
+  ```
 
 
 ---
