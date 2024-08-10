@@ -40,7 +40,7 @@ class Timer {
     }
 
     async startWorkSession() {
-        await this.sendEmbed('trabajo', this.workTime);
+        await this.sendEmbed('estudio', this.workTime);
         this.sessionStartTime = Date.now();
         this.interval = setTimeout(() => {
             this.endWorkSession();

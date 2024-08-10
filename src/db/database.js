@@ -50,7 +50,6 @@ function closeConnection() {
     });
 }
 
-// Exporta las funciones
 module.exports = {
     executeQuery: executeQuery,
     closeConnection: closeConnection,

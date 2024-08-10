@@ -3,7 +3,7 @@ const { Events } = require('discord.js');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
-        const prefix = '!'; // Define tu prefijo aquí
+        const prefix = '!';
 
         if (!message.content.startsWith(prefix) || message.author.bot) return;
 

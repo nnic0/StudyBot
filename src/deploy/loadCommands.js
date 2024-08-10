@@ -3,7 +3,6 @@ const path = require('node:path');
 const { Collection } = require('discord.js');
 
 module.exports = (client) => {
-    // Cargar comandos de Slash
     const foldersPath = path.join(__dirname, '..', 'commands', 'slash');
     const commandFolders = fs.readdirSync(foldersPath);
 
@@ -22,7 +21,6 @@ module.exports = (client) => {
         }
     }
 
-    // Cargar comandos de texto
     const textFoldersPath = path.join(__dirname, '..', 'commands', 'text');
     const textCommandFolders = fs.readdirSync(textFoldersPath);
 
